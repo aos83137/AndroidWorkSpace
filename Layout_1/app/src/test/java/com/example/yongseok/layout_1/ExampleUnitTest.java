@@ -1,4 +1,4 @@
-package com.example.yongseok.myapplication2;
+package com.example.yongseok.layout_1;
 
 import org.junit.Test;
 
