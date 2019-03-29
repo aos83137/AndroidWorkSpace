@@ -4,24 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/buttonSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="12dp"
         android:text="SECOND"
+        app:layout_constraintBottom_toTopOf="@+id/buttonThird"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/buttonThird"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:text="THIRD"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSms"
         app:layout_constraintStart_toStartOf="@+id/buttonSecond"
         app:layout_constraintTop_toBottomOf="@+id/buttonSecond" />
+
+    <Button
+        android:id="@+id/buttonSms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="SMS"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPhoto"
+        app:layout_constraintStart_toStartOf="@+id/buttonThird"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThird" />
+
+    <Button
+        android:id="@+id/buttonPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/buttonSms"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSms" />
 </android.support.constraint.ConstraintLayout>
