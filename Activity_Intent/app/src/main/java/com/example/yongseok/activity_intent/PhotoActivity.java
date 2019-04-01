@@ -34,6 +34,7 @@ public class PhotoActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {  // 클릭하면 ACTION_PICK 연결로 기본 갤러리를 불러옵니다
                 Intent intent = new Intent(Intent.ACTION_PICK);
+
                 intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
