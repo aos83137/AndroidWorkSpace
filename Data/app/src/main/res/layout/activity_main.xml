@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="text|date" />
 
         <Button
             android:id="@+id/buttonLogin"
@@ -71,6 +71,13 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:onClick="onLogin"/>
+
+        <Button
+            android:id="@+id/buttonHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:onClick="onHistory"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

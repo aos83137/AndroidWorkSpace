@@ -49,4 +49,15 @@ public class HistoryDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+
+    public long delete(UserBean user){
+        SQLiteDatabase db = getWritableDatabase();
+        String sequence = String.valueOf(user.getSequenceNumber());
+        return db.delete("history", "getSequenceNumber=?", new String[] {sequence});
+    }
+    public long delete(){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete("history", null, null);
+    }
+
 }

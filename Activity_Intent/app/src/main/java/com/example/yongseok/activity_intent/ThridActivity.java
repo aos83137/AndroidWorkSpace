@@ -17,7 +17,7 @@ public class ThridActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.button_finish).setOnClickListener(this);
 
         Intent i = getIntent();
-        if(i.getType() != null && i.getType().equals("text/plain")){
+        if(i.getType() != null && i.getType().equals("text/plain")){//null은 객체가 아니라서 equals 메소드가 없습니다.
             setResult(Activity.RESULT_OK);
             String text = i.getStringExtra(Intent.EXTRA_TEXT);
             if(text != null){
