@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class MemoActivity extends AppCompatActivity  {
     private MemoDBHelper helper;
     private TextView head_text, body_text;
-    private  ArrayList<MemoBean> memos = helper.getAll();
+    private  ArrayList<MemoBean> memos;
     private void showUser(){
         ArrayList<MemoBean> memos = helper.getAll();
         for(MemoBean m : memos){

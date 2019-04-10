@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ItemClickListener {
+public class MainActivity extends AppCompatActivity implements ItemClickListener, View.OnClickListener {
     private Button add_memo;
     private MemoDBHelper helper;
     private ArrayList<MemoBean> data;
@@ -35,13 +35,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         memoList.setAdapter(adapter);
 
         add_memo = findViewById(R.id.add_memo);
-        add_memo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, MemoActivity.class);
-                startActivity(i);
-            }
-        });
+        add_memo.setOnClickListener(this);
     }
 
     @Override
@@ -50,6 +44,12 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 //        helper.delete(data.get(position));
 //        data.remove(position);
 
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i = new Intent(this, MemoActivity.class);
+        startActivity(i);
     }
 }

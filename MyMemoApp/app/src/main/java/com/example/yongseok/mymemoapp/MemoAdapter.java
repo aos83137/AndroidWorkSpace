@@ -21,6 +21,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
 
     private ArrayList<MemoBean> memoData;
     private ItemClickListener listener;
+
     public MemoAdapter(ArrayList<MemoBean> data, ItemClickListener listener) {
         memoData = data;
         this.listener = listener;
@@ -45,6 +46,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
         memoItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i =  new Intent()
                 listener.onItemClick(v, index);
             }
         });
