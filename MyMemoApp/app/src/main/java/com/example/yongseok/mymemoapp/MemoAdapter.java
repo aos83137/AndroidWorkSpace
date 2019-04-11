@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,17 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
 
     private ArrayList<MemoBean> memoData;
     private ItemClickListener listener;
+    private Context context;
 
     public MemoAdapter(ArrayList<MemoBean> data, ItemClickListener listener) {
         memoData = data;
         this.listener = listener;
     }
-
+    public MemoAdapter(ArrayList<MemoBean> data, ItemClickListener listener, Context context) {
+        memoData = data;
+        this.listener = listener;
+        this.context = context;
+    }//Context 가져오기 위해서 오버로딩함
 
     @NonNull
     @Override
@@ -40,14 +46,14 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MemoItemViewHolder memoItemViewHolder, int i) {
         MemoBean memoBean = memoData.get(i);
-        memoItemViewHolder.textViewSequence.setText(String.valueOf(memoBean.getSequenceNumber()));
+
+        memoItemViewHolder.textViewSequence.setText(String.valueOf(i+1));
         memoItemViewHolder.textViewName.setText(memoBean.getMemo_head());
         final int index = i;
         memoItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =  new Intent()
-                listener.onItemClick(v, index);
+                listener.onItemClick(v, index, context);
             }
         });
     }
