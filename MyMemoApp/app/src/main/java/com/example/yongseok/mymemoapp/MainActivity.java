@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         data = helper.getAll();
         adapter = new MemoAdapter(data, this, this);//자기자신Context날리기
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL); // 가로
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL); // 세로
         memoList = findViewById(R.id.memoList);
         memoList.setLayoutManager(layoutManager);
         memoList.setAdapter(adapter);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
     @Override
     public void onItemClick(View v, int position, Context context) { // 여기가 item 눌렀을때 event임 // position은 item id라 보자
-        Intent  i = new Intent(context, MemoActivity.class);
+        Intent  i = new Intent(MainActivity.this, MemoActivity.class);
         MemoBean item_memo = data.get(position);
         i.putExtra("item_sequence", item_memo.getSequenceNumber());
         i.putExtra("item_head", item_memo.getMemo_head());
@@ -63,6 +63,19 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode!= REQ_MEMO) return;
+
+        //
+//        this.data  = helper.get();
+//        data.getCharSequenceArrayListExtra()
+        //
+
         this.recreate();
+    }
+
+    public void onInsert(View view){
+        Intent i = new Intent(this, MemoActivity.class);
+        startActivityForResult(i, REQ_MEMO);
     }
 }

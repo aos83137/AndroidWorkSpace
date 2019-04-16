@@ -3,9 +3,10 @@ package com.example.yongseok.mymemoapp;
 import android.preference.PreferenceActivity;
 
 public class MemoBean {
-    private  int sequenceNumber;
+    private  int sequenceNumber; // primary key
     private String memo_head;
     private String memo_body;
+                        // sated time 만들어 보자
 
     public void setMemo_head(String memo_head) {
         this.memo_head = memo_head;

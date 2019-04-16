@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
 
@@ -45,9 +47,17 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MemoItemViewHolder memoItemViewHolder, int i) {
-        MemoBean memoBean = memoData.get(i);
+        MemoBean memoBean = memoData.get(i); // 선택한놈 bean만 저장
 
         memoItemViewHolder.textViewSequence.setText(String.valueOf(i+1));
+/*
+        시간 추가 -- Bean이랑 추가 안해서 오류남 나중에 확인,참고
+        Date date = new Date(memoBean.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        String time = format.format(date);
+        memoItemViewHolder.textViewTime.setText(time);
+*/
+
         memoItemViewHolder.textViewName.setText(memoBean.getMemo_head());
         final int index = i;
         memoItemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +69,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount() { // 왜하는거지??
         if (memoData == null)
             return 0;
         else

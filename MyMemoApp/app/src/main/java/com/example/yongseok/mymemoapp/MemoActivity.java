@@ -21,6 +21,7 @@ public class MemoActivity extends AppCompatActivity {
     private String item_head, item_body;
     private int item_sequence;
     private int check;
+
     private void showUser() {
         ArrayList<MemoBean> memos = helper.getAll();
         for (MemoBean m : memos) {
@@ -28,6 +29,8 @@ public class MemoActivity extends AppCompatActivity {
         }
 //        Log.i("MAIN", "["+memos.get(1).getSequenceNumber()+":"+memos.get(1).getMemo_head()+"]");
     }
+
+    private MemoBean memo;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,34 +41,40 @@ public class MemoActivity extends AppCompatActivity {
         body_text = findViewById(R.id.text_body);
 
         item_sequence = getIntent().getIntExtra("item_sequence", -1);
-        item_head = getIntent().getStringExtra("item_head");
-        item_body = getIntent().getStringExtra("item_body");
 
-        check = getIntent().getIntExtra("flag",0);
+        if (item_sequence == -1) {
+            memo = new MemoBean();
+        } else {
+            memo = helper.get(item_sequence);
 
-        head_text.setText(item_head);
-        body_text.setText(item_body);
+/*            item_head = memo.getMemo_head();
+            item_body = memo.getMemo_body();*/
+            item_head = getIntent().getStringExtra("item_head");
+            item_body = getIntent().getStringExtra("item_body");
+
+            head_text.setText(item_head);
+            body_text.setText(item_body);
+        }
+
+//        check = getIntent().getIntExtra("flag",0); 필요없는거 같음
 
         setResult(Activity.RESULT_CANCELED);
-
-
     }
 
     public void saveMemo(View v) {
-
-/*        if(check == 999) {
-            Toast.makeText(this, "이미 저장 된 파일입니다.~~", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
 
         String head_memo = head_text.getText().toString().trim();
         String body_memo = body_text.getText().toString().trim();
         if (head_memo.length() == 0) {
             Toast.makeText(this, "제목을 입력하세요", Toast.LENGTH_SHORT).show();
-        }/*else if(head_memo.equals(item_head) && body_memo.equals(body_text)){
-            Toast.makeText(this, "이미 저장 된 파일입니다.~~", Toast.LENGTH_SHORT).show();
-            return;
+        }
+          /*
+           if(helper.insert(memo) > 0){ // 실패하면 음수니까 이렇게 조건 검
+            setResult(Activity.RESULT_OK);
+            finish();
         }*/
+
+
         MemoBean memo = new MemoBean();
         memo.setMemo_head(head_memo);
         memo.setMemo_body(body_memo);
@@ -81,6 +90,7 @@ public class MemoActivity extends AppCompatActivity {
     public void clearMemo(View v) {
         helper.clear(item_sequence);
         Toast.makeText(this, "삭제완료", Toast.LENGTH_SHORT).show();
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
