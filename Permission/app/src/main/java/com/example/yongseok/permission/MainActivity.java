@@ -51,14 +51,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toggleButton = findViewById(R.id.toggleButton);
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); // null이 올때는 블루투스가 없는 경우임
+        //아답터 호출할때 null 확인 해야함
 
-        if(!bluetoothAdapter.isEnabled()){
-            toggleButton.setChecked(false);
-        }else{
-            toggleButton.setChecked(true);
-        }
-
+        toggleButton.setChecked(bluetoothAdapter.isEnabled()); // 간단하네;;
+//        if(!bluetoothAdapter.isEnabled()){
+//            toggleButton.setChecked(false);
+//        }else{
+//            toggleButton.setChecked(true);
+//        }
+        toggleButton.setOnCheckedChangeListener((v, c)->{
+            if(c) bluetoothAdapter.enable();
+            else bluetoothAdapter.disable();
+        });
         WebView webView = findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient()); // 이게 빠지면 폰에 있는 웹브라우저를 호출하게 됨 이걸해야 내창에서뜸
         webView.loadUrl("https://www.naver.com/");
