@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +15,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button;
     private TextView textView_name, textView_email;
     private RadioButton radioButton1, radioButton2, radioButton3;
+    private RadioGroup radioGroup;
     private CheckBox checkBoxes1, checkBoxes2, checkBoxes3, checkBoxes4, checkBoxes5, checkBoxes6, checkBoxes7, checkBoxes8, checkBoxes9;
     private int cnt = 0;
     private int checkBoxCnt = 0;
     private View.OnClickListener radioListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             cnt++;
         }
     };
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkBoxes7.setOnCheckedChangeListener(this);
         checkBoxes8.setOnCheckedChangeListener(this);
         checkBoxes9.setOnCheckedChangeListener(this);
-
+        radioGroup.getCheckedRadioButtonId();
     }
 
 

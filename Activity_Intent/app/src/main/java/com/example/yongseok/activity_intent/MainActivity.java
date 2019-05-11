@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.buttonSecond).setOnClickListener(this);
         findViewById(R.id.buttonThird).setOnClickListener(this);
         findViewById(R.id.buttonSms).setOnClickListener(v -> {
-            Intent i= new Intent(Intent.ACTION_SENDTO);
-            i.setData(Uri.parse("smsto:010-7225-9161"));
-            i.putExtra("sms_body", "Hello");
-            startActivity(Intent.createChooser(i, "Select one"));
+            Intent i= new Intent(Intent.ACTION_SENDTO); //Action
+            i.setData(Uri.parse("smsto:010-7225-9161")); // Data uri
+            i.putExtra("sms_body", "Hello"); // sms_body
+            startActivity(Intent.createChooser(i, "Select one")); //message가 두개 이상 경우Chooser을 사용하면됨 하나면 그냥 intent만 넣으면 됨
         });
         findViewById(R.id.buttonPhoto).setOnClickListener(this);
     }

@@ -20,9 +20,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
+public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> { //viewHolder
 
-    private ArrayList<MemoBean> memoData;
+    private ArrayList<MemoBean> memoData; // data list
     private ItemClickListener listener;
     private Context context;
 
@@ -38,15 +38,15 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoItemViewHolder> {
 
     @NonNull
     @Override
-    public MemoItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater
+    public MemoItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) { // ViewHolder 만드는 메서드
+        View itemView = LayoutInflater //xml파일을 자바 파일로 변환할 때 쓰는 친구임
                 .from(viewGroup.getContext())
                 .inflate(R.layout.item_memo_card, viewGroup, false);
-        return new MemoItemViewHolder(itemView);
+        return new MemoItemViewHolder(itemView); // itemView를 return 즉 공급해줌 어디에? -> recycler view에다가!
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MemoItemViewHolder memoItemViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MemoItemViewHolder memoItemViewHolder, int i) { //item 값 저장 Data list사용
         MemoBean memoBean = memoData.get(i); // 선택한놈 bean만 저장
 
         memoItemViewHolder.textViewSequence.setText(String.valueOf(i+1));

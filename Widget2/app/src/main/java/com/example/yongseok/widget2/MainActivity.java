@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     public void onClick(View v) {
         RadioButton button = (RadioButton) v;
         Toast.makeText(this, button.getText(), Toast.LENGTH_SHORT).show();
+        if(button.getId() == R.id.radioButton){
+            progressBar2.incrementProgressBy(1);
+        }else if(v.getId() == R.id.radioButton2){
+            progressBar2.incrementProgressBy(-1);
+        }
     }
 
     @Override
