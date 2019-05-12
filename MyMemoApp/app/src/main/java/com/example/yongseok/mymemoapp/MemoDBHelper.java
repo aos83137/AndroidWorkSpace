@@ -53,7 +53,7 @@ public class MemoDBHelper extends SQLiteOpenHelper {
     public MemoBean get(int id){
         SQLiteDatabase db = getReadableDatabase();
         String idStr = String.valueOf(id);
-        Cursor cursor = db.query("memos", null, "id=?", new String[]{idStr},
+        Cursor cursor = db.query("memoList", null, "id=?", new String[]{idStr},
                 null,null,null);
         if(cursor.moveToNext()){
             MemoBean memo = new MemoBean();

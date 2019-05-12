@@ -6,13 +6,17 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class QuestionListActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class QuestionListActivity extends AppCompatActivity implements ClickListener {
     private static final String sysPasswd = "1541";
     private static final int REQ_QUESTION = 1234;
 
@@ -20,6 +24,11 @@ public class QuestionListActivity extends AppCompatActivity {
     private Button sys_signIn;
     private ImageView plusQuizBtn;
     private ConstraintLayout logWindow,sysWindow;
+
+    private QuestionDBHelper helper;
+    private ArrayList<QuestionBean> data;
+    private RecyclerView questionList;
+    private QuizAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,17 @@ public class QuestionListActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQ_QUESTION);
             }
         });
+
+
+        //list처리
+        helper = new QuestionDBHelper(this, "questionList", null, 1);
+        data = helper.getAll();
+        adapter = new QuizAdapter(data, this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        questionList = findViewById(R.id.questionList);
+        questionList.setLayoutManager(layoutManager);
+        questionList.setAdapter(adapter);
     }
 
     @Override
@@ -61,5 +81,10 @@ public class QuestionListActivity extends AppCompatActivity {
             if(requestCode == REQ_QUESTION){
 
             }
+    }
+
+    @Override
+    public void onItemClick(View v, int position) {
+
     }
 }
