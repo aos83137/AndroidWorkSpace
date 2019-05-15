@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button startBtn;
     private ImageView setting;
     private TextView textView;
-    private int flag=0;
+    private int flag=-1;
     public static final int LEVEL_EASY = 123;
     public static final int LEVEL_HARD= 124;
 
@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-            if(flag != 0) {
+            if(flag > 0) {
+                //putExtra  intent 전달
                 intent.putExtra("level_state", flag);
+
                 startActivity(intent);
             }else{
                 Toast.makeText(MainActivity.this, "난이도를 선택해 주세요", Toast.LENGTH_SHORT).show();
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     flag = LEVEL_HARD;
                     textView.setText("Hard 선택");
                 }
-                Log.i("Main", ""+flag);
+                Log.i("MAIN", ""+flag);
             }
         });//버튼 클릭시 flag에 현재 상태 저장
 

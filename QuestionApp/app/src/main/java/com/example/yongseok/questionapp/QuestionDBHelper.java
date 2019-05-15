@@ -95,6 +95,12 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public void update(int item_sequence){
+        SQLiteDatabase db = getWritableDatabase();
+        String form = String.format("UPDATE %s SET %s = ", "questionList", "sequenceNumber",item_sequence);
+        db.execSQL(form);
+    }
+
     public void clear(int item_sequence){
         SQLiteDatabase db = getWritableDatabase();
         String form = String.format("DELETE FROM %s WHERE %s = %d", "questionList", "sequenceNumber",item_sequence);

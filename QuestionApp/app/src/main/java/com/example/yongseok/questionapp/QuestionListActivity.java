@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,7 +24,8 @@ public class QuestionListActivity extends AppCompatActivity implements ClickList
     private EditText get_passwd;
     private Button sys_signIn;
     private ImageView plusQuizBtn;
-    private ConstraintLayout logWindow,sysWindow;
+    private ConstraintLayout logWindow, sysWindow;
+    private boolean signFlag;
 
     private QuestionDBHelper helper;
     private ArrayList<QuestionBean> data;
@@ -35,19 +37,30 @@ public class QuestionListActivity extends AppCompatActivity implements ClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         //signIn 이벤트 처리
-        get_passwd  = findViewById(R.id.passwdEdit);
+        get_passwd = findViewById(R.id.passwdEdit);
         sys_signIn = findViewById(R.id.sys_in_button);
         sys_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String passwd = get_passwd.getText().toString();
-                if(passwd.equals(sysPasswd)){
+                if (passwd.equals(sysPasswd)) {
                     sysWindow = findViewById(R.id.sysWindow);
                     sysWindow.setVisibility(View.VISIBLE);
                     logWindow = findViewById(R.id.loginWindow);
                     logWindow.setVisibility(View.GONE);
-                }else{
+                    signFlag = true;
+
+                    //키보드 내리기
+                    InputMethodManager imm  = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(get_passwd.getWindowToken(), 0);
+                } else {
                     Toast.makeText(QuestionListActivity.this, "비밀번호가 틀렸습니다.!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -78,14 +91,16 @@ public class QuestionListActivity extends AppCompatActivity implements ClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == REQ_QUESTION){
+        if (requestCode == REQ_QUESTION) {
 
-            }
-            this.recreate();
+        }
     }
 
     @Override
     public void onItemClick(View v, int position) {
-
+        Intent i = new Intent(QuestionListActivity.this, QuestionActivity.class);
+        QuestionBean b = data.get(position);
+        i.putExtra("sNum", b.getSequenceNumber());
+        startActivityForResult(i,REQ_QUESTION);
     }
 }

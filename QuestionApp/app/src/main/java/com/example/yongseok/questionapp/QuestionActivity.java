@@ -2,6 +2,7 @@ package com.example.yongseok.questionapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -34,33 +35,36 @@ public class QuestionActivity extends AppCompatActivity {
     final int FLAG_YYDATE = 431;
     final int FLAG_TTTIME = 432;
 
+    private ArrayList<QuestionBean> data;
     private ToggleButton toggleButton;
     private Button saveBtn, deleteBtn;
     private EditText problemEdit, scoringEdit, answer1Edit, answer2Edit, answer3Edit, answer4Edit;
     private ImageButton answer1Img, answer2Img, answer3Img, answer4Img;
     private RadioGroup radioGroup;
-    private RadioButton radio1, radio2, radio3, radio4;
+    private RadioButton txtRadio1, txtRadio2, txtRadio3, txtRadio4, imgRadio1,imgRadio2,imgRadio3,imgRadio4;
     private ConstraintLayout textQuizWindow, imgQuizWindow;
+    private int sNum;
 
+    //type ==img 라디오버튼 리스너
     private View.OnClickListener radioListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.imgRadio1){
-                radio2.setChecked(false);
-                radio3.setChecked(false);
-                radio4.setChecked(false);
+                imgRadio2.setChecked(false);
+                imgRadio3.setChecked(false);
+                imgRadio4.setChecked(false);
             }else if(v.getId() == R.id.imgRadio2){
-                radio1.setChecked(false);
-                radio3.setChecked(false);
-                radio4.setChecked(false);
+                imgRadio1.setChecked(false);
+                imgRadio3.setChecked(false);
+                imgRadio4.setChecked(false);
             }else if(v.getId() == R.id.imgRadio3){
-                radio2.setChecked(false);
-                radio1.setChecked(false);
-                radio4.setChecked(false);
+                imgRadio2.setChecked(false);
+                imgRadio1.setChecked(false);
+                imgRadio4.setChecked(false);
             }else if(v.getId() == R.id.imgRadio4){
-                radio2.setChecked(false);
-                radio3.setChecked(false);
-                radio1.setChecked(false);
+                imgRadio2.setChecked(false);
+                imgRadio3.setChecked(false);
+                imgRadio1.setChecked(false);
             }
         }
     };
@@ -85,6 +89,14 @@ public class QuestionActivity extends AppCompatActivity {
         answer3Img = findViewById(R.id.imageButton3);
         answer4Img = findViewById(R.id.imageButton4);
         radioGroup = findViewById(R.id.txtRadioGroup);
+        imgRadio1 = findViewById(R.id.imgRadio1);
+        imgRadio2 = findViewById(R.id.imgRadio2);
+        imgRadio3 = findViewById(R.id.imgRadio3);
+        imgRadio4 = findViewById(R.id.imgRadio4);
+        txtRadio1 = findViewById(R.id.txtRadio1);
+        txtRadio2 = findViewById(R.id.txtRadio2);
+        txtRadio3 = findViewById(R.id.txtRadio3);
+        txtRadio4 = findViewById(R.id.txtRadio4);
 
         //toggle 이벤트 처리
         toggleButton = findViewById(R.id.toggleInQuestionApp);
@@ -111,11 +123,26 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveQuestion();
+
+//                Intent i = new Intent();
+//                i.putExtra("")
+
                 Toast.makeText(QuestionActivity.this, "저장완료", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
+        //delete 이벤트
+        deleteBtn = findViewById(R.id.delQuestionApp);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper.clear(sNum);
+                Toast.makeText(QuestionActivity.this, "삭제완료", Toast.LENGTH_SHORT).show();
+                showQuestion();
+                finish();
+            }
+        });
         //answer IMG 이벤트
         answer1Img = findViewById(R.id.imageButton);
         answer1Img.setOnClickListener(new View.OnClickListener() {
@@ -148,15 +175,15 @@ public class QuestionActivity extends AppCompatActivity {
 
 
         // radio 버튼 처리..
-        radio1 = findViewById(R.id.imgRadio1);
-        radio2 = findViewById(R.id.imgRadio2);
-        radio3 = findViewById(R.id.imgRadio3);
-        radio4 = findViewById(R.id.imgRadio4);
+        imgRadio1 = findViewById(R.id.imgRadio1);
+        imgRadio2 = findViewById(R.id.imgRadio2);
+        imgRadio3 = findViewById(R.id.imgRadio3);
+        imgRadio4 = findViewById(R.id.imgRadio4);
 
-        radio1.setOnClickListener(radioListener);
-        radio2.setOnClickListener(radioListener);
-        radio3.setOnClickListener(radioListener);
-        radio4.setOnClickListener(radioListener);
+        imgRadio1.setOnClickListener(radioListener);
+        imgRadio2.setOnClickListener(radioListener);
+        imgRadio3.setOnClickListener(radioListener);
+        imgRadio4.setOnClickListener(radioListener);
 
 
         //db 처리
@@ -164,6 +191,71 @@ public class QuestionActivity extends AppCompatActivity {
         showQuestion();
 
 
+        //card클릭으로 호출했을 경우
+        sNum = getIntent().getIntExtra("sNum", -1);
+        if(sNum != -1){
+
+            QuestionBean bean = null;
+            data = dbHelper.getAll();
+
+            for(int i=0;i<data.size();i++){
+                if(data.get(i).getSequenceNumber() == sNum){
+                    bean = data.get(i);
+                }
+            }
+            problemEdit.setText(bean.getProblem());
+            scoringEdit.setText(bean.getScoring());
+
+            //type에 따라 달라짐
+            if(bean.getType().equals(QuestionBean.IMG)){ //img
+                toggleButton.setChecked(false);
+
+                switch (bean.getAnswerNum()){
+                    case 1:
+                        imgRadio1.setChecked(true);
+                        break;
+                    case 2:
+                        imgRadio2.setChecked(true);
+                        break;
+                    case 3:
+                        imgRadio3.setChecked(true);
+                        break;
+                    case 4:
+                        imgRadio4.setChecked(true);
+                        break;
+                }
+//                answer1Img.setImageURI(bean.getAnswer1());
+//                answer2Img.setRes(bean.getAnswer2());
+//                answer3Img.setText(bean.getAnswer3());
+//                answer4Img.setText(bean.getAnswer4());
+                Log.i("MAIN", "IMG형식 잘나옴");
+            }else if(bean.getType().equals(QuestionBean.TEXT)){ // text
+                toggleButton.setChecked(true);
+
+                switch (bean.getAnswerNum()) {
+                    case 1:
+                        txtRadio1.setChecked(true);
+                        break;
+                    case 2:
+                        txtRadio2.setChecked(true);
+                        break;
+                    case 3:
+                        txtRadio3.setChecked(true);
+                        break;
+                    case 4:
+                        txtRadio4.setChecked(true);
+                        break;
+                }
+                answer1Edit.setText(bean.getAnswer1());
+                answer2Edit.setText(bean.getAnswer2());
+                answer3Edit.setText(bean.getAnswer3());
+                answer4Edit.setText(bean.getAnswer4());
+                Log.i("MAIN", "TEXT형식 잘나옴");
+            }else{
+                Log.i("MAIN", "아무것도 없이 걍 나옴..");
+            }
+
+        }
     }
 
     //DATE 처리 함수
@@ -198,7 +290,7 @@ public class QuestionActivity extends AppCompatActivity {
         ArrayList<QuestionBean> questions = dbHelper.getAll();
         for (QuestionBean q : questions) {
             String title = q.getProblem();
-            Log.i("MAIN", "[" + q.getSequenceNumber() + "]" + title + q.getScoring() +"  " +q.getAnswerNum() +"  " + q.getType() );
+            Log.i("MAIN", "[" + q.getSequenceNumber() + "]" + title + "스코어 : "+q.getScoring() +" 정답번호:" +q.getAnswerNum() +"타입:  " + q.getType() );
         }
     }
 
@@ -206,33 +298,39 @@ public class QuestionActivity extends AppCompatActivity {
     public void saveQuestion() {
         QuestionBean question = new QuestionBean();
 
-        String tBtn;
         if (toggleButton.isChecked()) { //text
-            tBtn = toggleButton.getTextOn().toString();
             question.setAnswer1(answer1Edit.getText().toString());
-            question.setAnswer1(answer2Edit.getText().toString());
-            question.setAnswer1(answer3Edit.getText().toString());
-            question.setAnswer1(answer4Edit.getText().toString());
+            question.setAnswer2(answer2Edit.getText().toString());
+            question.setAnswer3(answer3Edit.getText().toString());
+            question.setAnswer4(answer4Edit.getText().toString());
 
             if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio1) question.setAnswerNum(1);
             else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio2) question.setAnswerNum(2);
             else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio3) question.setAnswerNum(3);
             else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio4) question.setAnswerNum(4);
             else question.setAnswerNum(-1);
-        } else { // img
-            tBtn = toggleButton.getTextOff().toString();
 
-            if(radio1.isChecked()) question.setAnswerNum(1);
-            else if(radio2.isChecked()) question.setAnswerNum(2);
-            else if(radio3.isChecked()) question.setAnswerNum(3);
-            else if(radio4.isChecked()) question.setAnswerNum(4);
+            question.setType(QuestionBean.TEXT);
+        } else { // img
+            String test = answer1Img.getResources().toString();
+
+            question.setAnswer1(answer1Img.getResources().toString());
+            question.setAnswer2(answer2Img.getResources().toString());
+            question.setAnswer3(answer3Img.getResources().toString());
+            question.setAnswer4(answer4Img.getResources().toString());
+
+            if(imgRadio1.isChecked()) question.setAnswerNum(1);
+            else if(imgRadio2.isChecked()) question.setAnswerNum(2);
+            else if(imgRadio3.isChecked()) question.setAnswerNum(3);
+            else if(imgRadio4.isChecked()) question.setAnswerNum(4);
             else question.setAnswerNum(-1);
+
+            question.setType(QuestionBean.IMG);
         }
 
 
         question.setProblem(problemEdit.getText().toString());
         question.setScoring(scoringEdit.getText().toString().trim());
-        question.setType(tBtn);
         question.setScoring(scoringEdit.getText().toString().trim());
         question.setTtTime(generationTime(FLAG_TTTIME));
         question.setYyDate(generationTime(FLAG_YYDATE));
@@ -248,55 +346,19 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (requestCode == REQ_CODE_SELECT_IMAGE1) {
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap image_bitmap = null;
-                try {
-                    image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    answer1Img.setImageBitmap(image_bitmap);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer1Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE2) {
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap image_bitmap = null;
-                try {
-                    image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    answer2Img.setImageBitmap(image_bitmap);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer2Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE3) {
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap image_bitmap = null;
-                try {
-                    image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    answer3Img.setImageBitmap(image_bitmap);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer3Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE4) {
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap image_bitmap = null;
-                try {
-                    image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                    answer4Img.setImageBitmap(image_bitmap);
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                answer4Img.setImageURI(data.getData());
             }
         }
     }
