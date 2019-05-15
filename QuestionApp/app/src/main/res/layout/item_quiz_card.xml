@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,23 +22,35 @@
             app:layout_constraintEnd_toStartOf="@+id/saveDate"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/saveDate" />
 
         <TextView
             android:id="@+id/saveDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:text="saveDate"
-            app:layout_constraintEnd_toStartOf="@+id/type"
-            app:layout_constraintTop_toTopOf="@+id/titleCard" />
+            app:layout_constraintBottom_toBottomOf="@+id/ttTime"
+            app:layout_constraintEnd_toStartOf="@+id/yyDate"
+            app:layout_constraintTop_toTopOf="@+id/yyDate" />
 
         <TextView
-            android:id="@+id/type"
+            android:id="@+id/yyDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="type"
+            android:text="2019-05-15"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/saveDate" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ttTime"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:text="12:33:22"
+            app:layout_constraintEnd_toEndOf="@+id/yyDate"
+            app:layout_constraintStart_toStartOf="@+id/yyDate"
+            app:layout_constraintTop_toBottomOf="@+id/yyDate" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

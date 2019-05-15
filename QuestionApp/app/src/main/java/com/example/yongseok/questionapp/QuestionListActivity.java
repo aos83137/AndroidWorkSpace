@@ -81,6 +81,7 @@ public class QuestionListActivity extends AppCompatActivity implements ClickList
             if(requestCode == REQ_QUESTION){
 
             }
+            this.recreate();
     }
 
     @Override

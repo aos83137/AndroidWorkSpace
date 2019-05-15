@@ -9,7 +9,8 @@ public class QuestionBean {
     private int sequenceNumber; // primary key
     private String  problem,scoring,answer1,answer2,answer3,answer4,type;
     private int answerNum;
-//    private String date;
+    private String yyDate;
+    private String ttTime;
 
 
     public int getSequenceNumber() {
@@ -83,12 +84,20 @@ public class QuestionBean {
     public void setAnswerNum(int answerNum) {
         this.answerNum = answerNum;
     }
-/*
-    public String getDate() {
-        return date;
+
+    public String getYyDate() {
+        return yyDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }*/
+    public void setYyDate(String yyDate) {
+        this.yyDate = yyDate;
+    }
+
+    public String getTtTime() {
+        return ttTime;
+    }
+
+    public void setTtTime(String ttTime) {
+        this.ttTime = ttTime;
+    }
 }

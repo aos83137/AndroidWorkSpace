@@ -32,8 +32,9 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     public void onBindViewHolder(@NonNull QuizViewHolder quizViewHolder, int i) {
         QuestionBean questionBean = questionData.get(i);
         quizViewHolder.title.setText(questionBean.getProblem());
-        quizViewHolder.date.setText("1234");
-        quizViewHolder.type.setText("TXT");
+        quizViewHolder.type.setText(questionBean.getType());
+        quizViewHolder.yyDate.setText(questionBean.getYyDate());
+        quizViewHolder.ttTime.setText(questionBean.getTtTime());
         final int index = i;
         quizViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

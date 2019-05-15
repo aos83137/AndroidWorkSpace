@@ -19,7 +19,7 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table questionList (sequenceNumber integer primary key autoincrement, problem,scoring,answer1,answer2,answer3,answer4,type,answerNum)";
+        String sql = "create table questionList (sequenceNumber integer primary key autoincrement, problem,scoring,answer1,answer2,answer3,answer4,type,answerNum,yyDate, ttTime)";
         db.execSQL(sql);
     }
 
@@ -41,8 +41,9 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
         value.put("answer4", question.getAnswer4());
         value.put("type", question.getType());
         value.put("answerNum", question.getAnswerNum());
-//        value.put("date", question.getDate());
-
+        //date 추가
+        value.put("yyDate", question.getYyDate());
+        value.put("ttTime", question.getTtTime());
 
         return db.insert("questionList", null, value);
     }
@@ -62,7 +63,8 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
             question.setAnswer4(cursor.getString(cursor.getColumnIndex("answer4")));
             question.setType(cursor.getString(cursor.getColumnIndex("type")));
             question.setAnswerNum(cursor.getInt(cursor.getColumnIndex("answerNum")));
-//            question.setDate(cursor.getString(cursor.getColumnIndex("date")));
+            question.setYyDate(cursor.getString(cursor.getColumnIndex("yyDate")));
+            question.setTtTime(cursor.getString(cursor.getColumnIndex("ttTime")));
 
             return question;
         }else{
@@ -85,7 +87,8 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
             question.setAnswer4(cursor.getString(cursor.getColumnIndex("answer4")));
             question.setType(cursor.getString(cursor.getColumnIndex("type")));
             question.setAnswerNum(cursor.getInt(cursor.getColumnIndex("answerNum")));
-//            question.setDate(cursor.getString(cursor.getColumnIndex("date")));
+            question.setYyDate(cursor.getString(cursor.getColumnIndex("yyDate")));
+            question.setTtTime(cursor.getString(cursor.getColumnIndex("ttTime")));
 
             result.add(question);
         }

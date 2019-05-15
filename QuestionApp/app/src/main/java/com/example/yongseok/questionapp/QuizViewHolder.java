@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class QuizViewHolder extends RecyclerView.ViewHolder {
-    TextView title, date, type;
+    TextView title, type, yyDate, ttTime;
 
     public QuizViewHolder(@NonNull View itemView) {
         super(itemView);
         title = itemView.findViewById(R.id.titleCard);
-        date = itemView.findViewById(R.id.saveDate);
-        type = itemView.findViewById(R.id.type);
+        type = itemView.findViewById(R.id.saveDate);
+        yyDate = itemView.findViewById(R.id.yyDate);
+        ttTime = itemView.findViewById(R.id.ttTime);
     }
 }
