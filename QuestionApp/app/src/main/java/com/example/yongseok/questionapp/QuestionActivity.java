@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -21,8 +22,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +45,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ImageButton answer1Img, answer2Img, answer3Img, answer4Img;
     private RadioGroup radioGroup;
     private RadioButton txtRadio1, txtRadio2, txtRadio3, txtRadio4, imgRadio1,imgRadio2,imgRadio3,imgRadio4;
+    private String imgUli1,imgUli2,imgUli3,imgUli4;
     private ConstraintLayout textQuizWindow, imgQuizWindow;
     private int sNum;
 
@@ -224,10 +228,10 @@ public class QuestionActivity extends AppCompatActivity {
                         imgRadio4.setChecked(true);
                         break;
                 }
-//                answer1Img.setImageURI(bean.getAnswer1());
-//                answer2Img.setRes(bean.getAnswer2());
-//                answer3Img.setText(bean.getAnswer3());
-//                answer4Img.setText(bean.getAnswer4());
+                answer1Img.setImageURI(Uri.parse(bean.getAnswer1()));
+                answer2Img.setImageURI(Uri.parse(bean.getAnswer2()));
+                answer3Img.setImageURI(Uri.parse(bean.getAnswer3()));
+                answer4Img.setImageURI(Uri.parse(bean.getAnswer4()));
                 Log.i("MAIN", "IMG형식 잘나옴");
             }else if(bean.getType().equals(QuestionBean.TEXT)){ // text
                 toggleButton.setChecked(true);
@@ -312,12 +316,10 @@ public class QuestionActivity extends AppCompatActivity {
 
             question.setType(QuestionBean.TEXT);
         } else { // img
-            String test = answer1Img.getResources().toString();
-
-            question.setAnswer1(answer1Img.getResources().toString());
-            question.setAnswer2(answer2Img.getResources().toString());
-            question.setAnswer3(answer3Img.getResources().toString());
-            question.setAnswer4(answer4Img.getResources().toString());
+            question.setAnswer1(imgUli1);
+            question.setAnswer2(imgUli2);
+            question.setAnswer3(imgUli3);
+            question.setAnswer4(imgUli4);
 
             if(imgRadio1.isChecked()) question.setAnswerNum(1);
             else if(imgRadio2.isChecked()) question.setAnswerNum(2);
@@ -346,18 +348,22 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (requestCode == REQ_CODE_SELECT_IMAGE1) {
             if (resultCode == Activity.RESULT_OK) {
+                imgUli1 = data.getData().toString();
                 answer1Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE2) {
             if (resultCode == Activity.RESULT_OK) {
+                imgUli2 = data.getData().toString();
                 answer2Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE3) {
             if (resultCode == Activity.RESULT_OK) {
+                imgUli3 = data.getData().toString();
                 answer3Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE4) {
             if (resultCode == Activity.RESULT_OK) {
+                imgUli4 = data.getData().toString();
                 answer4Img.setImageURI(data.getData());
             }
         }
