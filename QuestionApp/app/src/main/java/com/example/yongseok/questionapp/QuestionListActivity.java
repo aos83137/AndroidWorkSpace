@@ -76,7 +76,6 @@ public class QuestionListActivity extends AppCompatActivity implements ClickList
             }
         });
 
-
         //list처리
         helper = new QuestionDBHelper(this, "questionList", null, 1);
         data = helper.getAll();

@@ -3,7 +3,6 @@ package com.example.yongseok.questionapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
@@ -95,10 +94,23 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public void update(int item_sequence){
+    public int update(int item_sequence, QuestionBean question){
         SQLiteDatabase db = getWritableDatabase();
-        String form = String.format("UPDATE %s SET %s = ", "questionList", "sequenceNumber",item_sequence);
-        db.execSQL(form);
+        ContentValues value = new ContentValues();
+        value.put("problem", question.getProblem());
+        value.put("scoring", question.getScoring());
+        value.put("answer1", question.getAnswer1());
+        value.put("answer2", question.getAnswer2());
+        value.put("answer3", question.getAnswer3());
+        value.put("answer4", question.getAnswer4());
+        value.put("type", question.getType());
+        value.put("answerNum", question.getAnswerNum());
+        //date 추가
+        value.put("yyDate", question.getYyDate());
+        value.put("ttTime", question.getTtTime());
+
+        String str = ""+item_sequence;
+        return db.update("questionList", value, String.format("%s=?","sequenceNumber"), new String[]{str});
     }
 
     public void clear(int item_sequence){

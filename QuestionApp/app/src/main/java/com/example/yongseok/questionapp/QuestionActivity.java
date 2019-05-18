@@ -45,7 +45,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ImageButton answer1Img, answer2Img, answer3Img, answer4Img;
     private RadioGroup radioGroup;
     private RadioButton txtRadio1, txtRadio2, txtRadio3, txtRadio4, imgRadio1,imgRadio2,imgRadio3,imgRadio4;
-    private String imgUli1,imgUli2,imgUli3,imgUli4;
+    private String imgUli1="",imgUli2="",imgUli3="",imgUli4="";
     private ConstraintLayout textQuizWindow, imgQuizWindow;
     private int sNum;
 
@@ -127,9 +127,6 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveQuestion();
-
-//                Intent i = new Intent();
-//                i.putExtra("")
 
                 Toast.makeText(QuestionActivity.this, "저장완료", Toast.LENGTH_SHORT).show();
                 finish();
@@ -337,8 +334,11 @@ public class QuestionActivity extends AppCompatActivity {
         question.setTtTime(generationTime(FLAG_TTTIME));
         question.setYyDate(generationTime(FLAG_YYDATE));
 
-
-        dbHelper.insert(question);
+        if(sNum==-1) {
+            dbHelper.insert(question);
+        }else{
+            dbHelper.update(sNum,question);
+        }
         showQuestion();
     }
 
