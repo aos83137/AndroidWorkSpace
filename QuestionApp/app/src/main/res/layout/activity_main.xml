@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@+id/radioGroup" />
 
     <TextView
-        android:id="@+id/easy_textView2"
+        android:id="@+id/hard_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -50,9 +50,9 @@
         android:id="@+id/level_textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:text="난이도 선택"
         android:textAlignment="center"
         android:textSize="30sp"

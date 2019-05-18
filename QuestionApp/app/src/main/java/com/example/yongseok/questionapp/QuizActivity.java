@@ -1,8 +1,10 @@
 package com.example.yongseok.questionapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,8 @@ public class QuizActivity extends AppCompatActivity {
     //hard_txt 위젯
     private EditText hard_txt_edit1;
     private Button resultSubBtn;
+
+    private static final int REQ_POPUP =214;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +94,10 @@ public class QuizActivity extends AppCompatActivity {
 
                 Log.i("FLAGTEST", "size : " + (quizs.size() - 1) + "  cnt : " + cnt);
                 if (quizs.size() == cnt) {//여기다가 팝업 만들기
-                    Toast.makeText(QuizActivity.this, "총 스코어 : " + score, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(QuizActivity.this, PopupActivity.class);
+                    intent.putExtra("data", "총점 : " + score+ "!");
+                    startActivityForResult(intent, REQ_POPUP);
+
                     finish();
                     return;  //return 넣은 이유 finsh만하니까 finish함수 끝나기전에 밑에 명령어를 실행하게 되어서 bean = quizs.get(cnt)를 실행하게 됨 그래서 오류나서 return으로 멈췄음
                 }else{
@@ -104,10 +111,13 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQ_POPUP){
+            if(resultCode == RESULT_OK){
+                Toast.makeText(this, "수고하셨습니다~", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void viewProblem(QuestionBean bean) {

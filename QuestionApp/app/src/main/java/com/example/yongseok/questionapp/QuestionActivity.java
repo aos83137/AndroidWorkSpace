@@ -44,8 +44,8 @@ public class QuestionActivity extends AppCompatActivity {
     private EditText problemEdit, scoringEdit, answer1Edit, answer2Edit, answer3Edit, answer4Edit;
     private ImageButton answer1Img, answer2Img, answer3Img, answer4Img;
     private RadioGroup radioGroup;
-    private RadioButton txtRadio1, txtRadio2, txtRadio3, txtRadio4, imgRadio1,imgRadio2,imgRadio3,imgRadio4;
-    private String imgUli1="",imgUli2="",imgUli3="",imgUli4="";
+    private RadioButton txtRadio1, txtRadio2, txtRadio3, txtRadio4, imgRadio1, imgRadio2, imgRadio3, imgRadio4;
+    private String imgUri1 = "", imgUri2 = "", imgUri3 = "", imgUri4 = "";
     private ConstraintLayout textQuizWindow, imgQuizWindow;
     private int sNum;
 
@@ -53,19 +53,19 @@ public class QuestionActivity extends AppCompatActivity {
     private View.OnClickListener radioListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.imgRadio1){
+            if (v.getId() == R.id.imgRadio1) {
                 imgRadio2.setChecked(false);
                 imgRadio3.setChecked(false);
                 imgRadio4.setChecked(false);
-            }else if(v.getId() == R.id.imgRadio2){
+            } else if (v.getId() == R.id.imgRadio2) {
                 imgRadio1.setChecked(false);
                 imgRadio3.setChecked(false);
                 imgRadio4.setChecked(false);
-            }else if(v.getId() == R.id.imgRadio3){
+            } else if (v.getId() == R.id.imgRadio3) {
                 imgRadio2.setChecked(false);
                 imgRadio1.setChecked(false);
                 imgRadio4.setChecked(false);
-            }else if(v.getId() == R.id.imgRadio4){
+            } else if (v.getId() == R.id.imgRadio4) {
                 imgRadio2.setChecked(false);
                 imgRadio3.setChecked(false);
                 imgRadio1.setChecked(false);
@@ -126,10 +126,20 @@ public class QuestionActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveQuestion();
 
-                Toast.makeText(QuestionActivity.this, "저장완료", Toast.LENGTH_SHORT).show();
-                finish();
+                if (problemEdit.getText().toString().trim().equals("")) {
+                    Toast.makeText(QuestionActivity.this, "문제를 입력하시오!", Toast.LENGTH_SHORT).show();
+                } else if (scoringEdit.getText().toString().trim().equals("")) {
+                    Toast.makeText(QuestionActivity.this, "배점을 입력하시오!", Toast.LENGTH_SHORT).show();
+                } else if (!toggleButton.isChecked() &&(!imgRadio1.isChecked() && !imgRadio2.isChecked() && !imgRadio3.isChecked() && !imgRadio4.isChecked())) {
+                    Toast.makeText(QuestionActivity.this, "정답을 체크해 주세요!", Toast.LENGTH_SHORT).show();
+                } else if (toggleButton.isChecked() && (radioGroup.getCheckedRadioButtonId() == -1)) {
+                    Toast.makeText(QuestionActivity.this, "정답을 체크해 주세요!", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveQuestion();
+                    Toast.makeText(QuestionActivity.this, "저장완료", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
@@ -194,13 +204,13 @@ public class QuestionActivity extends AppCompatActivity {
 
         //card클릭으로 호출했을 경우
         sNum = getIntent().getIntExtra("sNum", -1);
-        if(sNum != -1){
+        if (sNum != -1) {
 
             QuestionBean bean = null;
             data = dbHelper.getAll();
 
-            for(int i=0;i<data.size();i++){
-                if(data.get(i).getSequenceNumber() == sNum){
+            for (int i = 0; i < data.size(); i++) {
+                if (data.get(i).getSequenceNumber() == sNum) {
                     bean = data.get(i);
                 }
             }
@@ -208,10 +218,10 @@ public class QuestionActivity extends AppCompatActivity {
             scoringEdit.setText(bean.getScoring());
 
             //type에 따라 달라짐
-            if(bean.getType().equals(QuestionBean.IMG)){ //img
+            if (bean.getType().equals(QuestionBean.IMG)) { //img
                 toggleButton.setChecked(false);
 
-                switch (bean.getAnswerNum()){
+                switch (bean.getAnswerNum()) {
                     case 1:
                         imgRadio1.setChecked(true);
                         break;
@@ -224,13 +234,19 @@ public class QuestionActivity extends AppCompatActivity {
                     case 4:
                         imgRadio4.setChecked(true);
                         break;
+
                 }
-                answer1Img.setImageURI(Uri.parse(bean.getAnswer1()));
-                answer2Img.setImageURI(Uri.parse(bean.getAnswer2()));
-                answer3Img.setImageURI(Uri.parse(bean.getAnswer3()));
-                answer4Img.setImageURI(Uri.parse(bean.getAnswer4()));
+                imgUri1 = bean.getAnswer1();
+                imgUri2 = bean.getAnswer2();
+                imgUri3 = bean.getAnswer3();
+                imgUri4 = bean.getAnswer4();
+
+                answer1Img.setImageURI(Uri.parse(imgUri1));
+                answer2Img.setImageURI(Uri.parse(imgUri2));
+                answer3Img.setImageURI(Uri.parse(imgUri3));
+                answer4Img.setImageURI(Uri.parse(imgUri4));
                 Log.i("MAIN", "IMG형식 잘나옴");
-            }else if(bean.getType().equals(QuestionBean.TEXT)){ // text
+            } else if (bean.getType().equals(QuestionBean.TEXT)) { // text
                 toggleButton.setChecked(true);
 
                 switch (bean.getAnswerNum()) {
@@ -252,10 +268,9 @@ public class QuestionActivity extends AppCompatActivity {
                 answer3Edit.setText(bean.getAnswer3());
                 answer4Edit.setText(bean.getAnswer4());
                 Log.i("MAIN", "TEXT형식 잘나옴");
-            }else{
+            } else {
                 Log.i("MAIN", "아무것도 없이 걍 나옴..");
             }
-
         }
     }
 
@@ -291,7 +306,7 @@ public class QuestionActivity extends AppCompatActivity {
         ArrayList<QuestionBean> questions = dbHelper.getAll();
         for (QuestionBean q : questions) {
             String title = q.getProblem();
-            Log.i("MAIN", "[" + q.getSequenceNumber() + "]" + title + "스코어 : "+q.getScoring() +" 정답번호:" +q.getAnswerNum() +"타입:  " + q.getType() );
+            Log.i("MAIN", "[" + q.getSequenceNumber() + "]" + title + "스코어 : " + q.getScoring() + " 정답번호:" + q.getAnswerNum() + "타입:  " + q.getType());
         }
     }
 
@@ -305,23 +320,26 @@ public class QuestionActivity extends AppCompatActivity {
             question.setAnswer3(answer3Edit.getText().toString());
             question.setAnswer4(answer4Edit.getText().toString());
 
-            if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio1) question.setAnswerNum(1);
-            else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio2) question.setAnswerNum(2);
-            else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio3) question.setAnswerNum(3);
-            else if(radioGroup.getCheckedRadioButtonId() == R.id.txtRadio4) question.setAnswerNum(4);
+            if (radioGroup.getCheckedRadioButtonId() == R.id.txtRadio1) question.setAnswerNum(1);
+            else if (radioGroup.getCheckedRadioButtonId() == R.id.txtRadio2)
+                question.setAnswerNum(2);
+            else if (radioGroup.getCheckedRadioButtonId() == R.id.txtRadio3)
+                question.setAnswerNum(3);
+            else if (radioGroup.getCheckedRadioButtonId() == R.id.txtRadio4)
+                question.setAnswerNum(4);
             else question.setAnswerNum(-1);
 
             question.setType(QuestionBean.TEXT);
         } else { // img
-            question.setAnswer1(imgUli1);
-            question.setAnswer2(imgUli2);
-            question.setAnswer3(imgUli3);
-            question.setAnswer4(imgUli4);
+            question.setAnswer1(imgUri1);
+            question.setAnswer2(imgUri2);
+            question.setAnswer3(imgUri3);
+            question.setAnswer4(imgUri4);
 
-            if(imgRadio1.isChecked()) question.setAnswerNum(1);
-            else if(imgRadio2.isChecked()) question.setAnswerNum(2);
-            else if(imgRadio3.isChecked()) question.setAnswerNum(3);
-            else if(imgRadio4.isChecked()) question.setAnswerNum(4);
+            if (imgRadio1.isChecked()) question.setAnswerNum(1);
+            else if (imgRadio2.isChecked()) question.setAnswerNum(2);
+            else if (imgRadio3.isChecked()) question.setAnswerNum(3);
+            else if (imgRadio4.isChecked()) question.setAnswerNum(4);
             else question.setAnswerNum(-1);
 
             question.setType(QuestionBean.IMG);
@@ -334,11 +352,12 @@ public class QuestionActivity extends AppCompatActivity {
         question.setTtTime(generationTime(FLAG_TTTIME));
         question.setYyDate(generationTime(FLAG_YYDATE));
 
-        if(sNum==-1) {
+        if (sNum == -1) {
             dbHelper.insert(question);
-        }else{
-            dbHelper.update(sNum,question);
+        } else {
+            dbHelper.update(sNum, question);
         }
+
         showQuestion();
     }
 
@@ -348,22 +367,22 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (requestCode == REQ_CODE_SELECT_IMAGE1) {
             if (resultCode == Activity.RESULT_OK) {
-                imgUli1 = data.getData().toString();
+                imgUri1 = data.getData().toString();
                 answer1Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE2) {
             if (resultCode == Activity.RESULT_OK) {
-                imgUli2 = data.getData().toString();
+                imgUri2 = data.getData().toString();
                 answer2Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE3) {
             if (resultCode == Activity.RESULT_OK) {
-                imgUli3 = data.getData().toString();
+                imgUri3 = data.getData().toString();
                 answer3Img.setImageURI(data.getData());
             }
         } else if (requestCode == REQ_CODE_SELECT_IMAGE4) {
             if (resultCode == Activity.RESULT_OK) {
-                imgUli4 = data.getData().toString();
+                imgUri4 = data.getData().toString();
                 answer4Img.setImageURI(data.getData());
             }
         }

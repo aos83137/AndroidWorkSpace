@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button startBtn;
     private ImageView setting;
-    private TextView textView;
+    private TextView textView,easyView,hardView;
     private int flag = -1;
     public static final int LEVEL_EASY = 123;
     public static final int LEVEL_HARD = 124;
@@ -47,18 +47,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //radioGroup 이벤트처리
+        easyView = findViewById(R.id.easy_textView);
+        hardView = findViewById(R.id.hard_textView);
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.level_textView1);
+
+
+        //textView 클릭시 radio true
+        easyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton radio = findViewById(R.id.easy_radioButton);
+                radio.setChecked(true);
+            }
+        });
+
+        hardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton radio = findViewById(R.id.hard_radioButton);
+                radio.setChecked(true);
+            }
+        });
+
+        //radioGroup 이벤트처리
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.easy_radioButton) {
                     flag = LEVEL_EASY;
-                    textView.setText("Easy 선택");
+                    textView.setText("모든 문제가 객관식으로\n 출제됩니다.");
                 } else if (checkedId == R.id.hard_radioButton) {
                     flag = LEVEL_HARD;
-                    textView.setText("Hard 선택");
+                    textView.setText("객관식과 주관식이\n 출제됩니다.");
                 }
                 Log.i("MAIN", "" + flag);
             }

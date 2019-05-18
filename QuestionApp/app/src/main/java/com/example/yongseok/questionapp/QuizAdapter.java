@@ -30,8 +30,12 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder quizViewHolder, int i) {
+
+
         QuestionBean questionBean = questionData.get(i);
-        quizViewHolder.title.setText(questionBean.getProblem());
+
+        String str = cutString(questionBean.getProblem());//title 출력 조절 함수
+        quizViewHolder.title.setText(str);
         quizViewHolder.type.setText(questionBean.getType());
         quizViewHolder.yyDate.setText(questionBean.getYyDate());
         quizViewHolder.ttTime.setText(questionBean.getTtTime());
@@ -48,5 +52,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     public int getItemCount() {
         if (questionData == null) return 0;
         else return questionData.size();
+    }
+
+    public String cutString(String str) {
+        String text = str;
+
+        if(str.length()>10)
+            text = str.substring(0, 10) + "...";
+
+        return text;
     }
 }
