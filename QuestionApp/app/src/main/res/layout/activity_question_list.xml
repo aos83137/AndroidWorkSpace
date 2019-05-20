@@ -10,33 +10,37 @@
         android:id="@+id/loginWindow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <Button
             android:id="@+id/sys_in_button"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_edit"
             android:text="들어가기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwdEdit"
-            app:layout_constraintVertical_bias="0.095" />
+            android:textColor="@color/WhiteColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/passwdEdit"
+            app:layout_constraintStart_toStartOf="@+id/passwdEdit"
+            app:layout_constraintTop_toBottomOf="@+id/passwdEdit" />
 
         <EditText
             android:id="@+id/passwdEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/border_edit"
+            android:ems="7"
+            android:gravity="center"
             android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
@@ -44,22 +48,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:text="출제자 비밀번호"
             android:textAlignment="textStart"
+            android:textColor="@color/blackColor"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.427" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/sysWindow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:visibility="gone">
 
 
         <android.support.v7.widget.RecyclerView
@@ -82,6 +91,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:text="문제"
+            android:textColor="@color/blackColor"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -99,5 +109,6 @@
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/plus_icon_64" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

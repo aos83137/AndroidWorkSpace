@@ -71,6 +71,14 @@ public class QuizActivity extends AppCompatActivity {
 
         dbHelper = new QuestionDBHelper(this, "questionList", null, 1);
         quizs = dbHelper.getAll();
+        Log.i("MAINTEST", ""+quizs.size());
+
+        //db에 저장된 데이터가 없음
+        if(quizs.size() == 0){
+            Toast.makeText(this, "저장된 문제가 없어요, 만들어주세요!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         bean = quizs.get(cnt);
         viewProblem(bean);
@@ -79,6 +87,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cnt++;
+                radioCheckRls(); // radio클리어
                 //hard text 정답시
                 if (level == MainActivity.LEVEL_HARD && bean.getType().equals(QuestionBean.TEXT)) {
                     Log.i("FLAGTEST", "하드, 텍스트");
@@ -97,15 +106,11 @@ public class QuizActivity extends AppCompatActivity {
                     Intent intent = new Intent(QuizActivity.this, PopupActivity.class);
                     intent.putExtra("data", "총점 : " + score+ "!");
                     startActivityForResult(intent, REQ_POPUP);
-
-                    finish();
-                    return;  //return 넣은 이유 finsh만하니까 finish함수 끝나기전에 밑에 명령어를 실행하게 되어서 bean = quizs.get(cnt)를 실행하게 됨 그래서 오류나서 return으로 멈췄음
                 }else{
                     bean = quizs.get(cnt);
-                    radioCheckRls();
-
                     viewProblem(bean);
                 }
+
             }
         });
     }
@@ -115,6 +120,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQ_POPUP){
             if(resultCode == RESULT_OK){
+                finish();
+
                 Toast.makeText(this, "수고하셨습니다~", Toast.LENGTH_SHORT).show();
             }
         }

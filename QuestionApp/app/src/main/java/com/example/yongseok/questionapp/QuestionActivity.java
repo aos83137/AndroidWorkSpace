@@ -162,14 +162,14 @@ public class QuestionActivity extends AppCompatActivity {
                 goIMG(REQ_CODE_SELECT_IMAGE1);
             }
         });
-        answer2Img = findViewById(R.id.imageButton3);
+        answer2Img = findViewById(R.id.imageButton2);
         answer2Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goIMG(REQ_CODE_SELECT_IMAGE2);
             }
         });
-        answer3Img = findViewById(R.id.imageButton2);
+        answer3Img = findViewById(R.id.imageButton3);
         answer3Img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +184,6 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-
         // radio 버튼 처리..
         imgRadio1 = findViewById(R.id.imgRadio1);
         imgRadio2 = findViewById(R.id.imgRadio2);
@@ -196,11 +195,9 @@ public class QuestionActivity extends AppCompatActivity {
         imgRadio3.setOnClickListener(radioListener);
         imgRadio4.setOnClickListener(radioListener);
 
-
         //db 처리
         dbHelper = new QuestionDBHelper(this, "questionList", null, 1);
         showQuestion();
-
 
         //card클릭으로 호출했을 경우
         sNum = getIntent().getIntExtra("sNum", -1);

@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="title"
+            android:textColor="@color/blackColor"
             app:layout_constraintEnd_toStartOf="@+id/saveDate"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:text="saveDate"
+            android:textColor="@color/blackColor"
             app:layout_constraintBottom_toBottomOf="@+id/ttTime"
             app:layout_constraintEnd_toStartOf="@+id/yyDate"
             app:layout_constraintTop_toTopOf="@+id/yyDate" />
@@ -41,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2019-05-15"
+            android:textColor="@color/blackColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:text="12:33:22"
+            android:textColor="@color/blackColor"
             app:layout_constraintEnd_toEndOf="@+id/yyDate"
             app:layout_constraintStart_toStartOf="@+id/yyDate"
             app:layout_constraintTop_toBottomOf="@+id/yyDate" />

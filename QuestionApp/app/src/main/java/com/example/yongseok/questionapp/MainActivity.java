@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView setting;
     private TextView textView,easyView,hardView;
     private int flag = -1;
+    private QuestionDBHelper dbHelper;
+    private QuestionBean bean=null;
     public static final int LEVEL_EASY = 123;
     public static final int LEVEL_HARD = 124;
     public static final int REQ_TEST = 337;
@@ -30,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener start_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-            if (flag > 0) {
+            if (flag > 0)  {
                 //putExtra  intent 전달
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
                 intent.putExtra("level_state", flag);
 
                 startActivity(intent);
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         hardView = findViewById(R.id.hard_textView);
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.level_textView1);
+
+        //db안에 값이 있는지 없는지 확인
 
 
         //textView 클릭시 radio true
@@ -76,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.easy_radioButton) {
                     flag = LEVEL_EASY;
+                    textView.setTextSize(20);
                     textView.setText("모든 문제가 객관식으로\n 출제됩니다.");
                 } else if (checkedId == R.id.hard_radioButton) {
                     flag = LEVEL_HARD;
+                    textView.setTextSize(20);
                     textView.setText("객관식과 주관식이\n 출제됩니다.");
                 }
                 Log.i("MAIN", "" + flag);
