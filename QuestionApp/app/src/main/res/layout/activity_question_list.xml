@@ -14,11 +14,23 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/key_animation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="key.json"
+            app:lottie_loop="true" />
+
         <Button
             android:id="@+id/sys_in_button"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/button_edit"
             android:text="들어가기"
             android:textColor="@color/WhiteColor"
@@ -51,8 +63,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="출제자 비밀번호"
-            android:textAlignment="textStart"
+            android:text="출제자 비밀번호\n(1541)"
+            android:textAlignment="center"
             android:textColor="@color/blackColor"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -61,7 +73,8 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.427" />
+            app:layout_constraintVertical_bias="0.43" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -70,6 +83,18 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/key_animation2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="key.json"
+            app:lottie_loop="true" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/questionList"
